@@ -3,7 +3,14 @@ let db = undefined
 
 describe('DB', function () {
   
-  before( () => { require('fs').unlinkSync('.todo.db')  } )
+  before( () => { 
+    try{
+      require('fs').unlinkSync('.todo.db')
+    }catch(error){
+      console.log('Warning: ', error.message)
+    }
+  })
+  
 
   it('Creating an Instance', function () {
     db = require('bindings')('db')
@@ -11,11 +18,13 @@ describe('DB', function () {
   })
 
   it('Adding Tasks', function () {
-    db.add('task 1')
-    db.add('task 2')
-    db.add('task 3')
+    const tasks = ['task 1', 'task 2', 'task 3']
+    tasks.forEach(task => db.add(task))
+
+    let taskByName = db.list().map(todo => todo.task)
 
     assert.equal(db.list().length, 3, 'We expect three items')
+    assert.deepEqual(taskByName,tasks, `We should get this tasks ${tasks}`)
   })
 
   it('Updating', function () { 
