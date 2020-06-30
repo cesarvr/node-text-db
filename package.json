@@ -1,0 +1,23 @@
+{
+  "name": "qdb",
+  "version": "1.0.0",
+  "description": "Quick DB written in C++ with a Node.JS plugin.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "chai": "^4.2.0",
+    "nan": "^2.14.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha test/",
+    "install": "node-gyp rebuild"
+  },
+  "author": "cesar",
+  "license": "MIT",
+  "gypfile": true
+}
