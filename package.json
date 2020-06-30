@@ -14,7 +14,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "mocha test/",
+    "test": "npx mocha test/",
     "install": "node-gyp rebuild"
   },
   "author": "cesar",
