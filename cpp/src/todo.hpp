@@ -89,13 +89,13 @@ public:
         }
     }
     
-    void add(string entry){
-        auto *task = new Task({
-            .data = entry,
-            .completed = false
-        });
+    void add(string _data){
+        auto *task = new Task();
         
         task->id = head++;
+        task->data = _data; 
+        task->completed = false;
+        
         tasks.push_back(task);
     }
     
