@@ -31,7 +31,8 @@ int main(int argc, const char * argv[]) {
 
     print(todo);
     
-    todo[1]->update("task-2");
+    todo[1]->update("TASK-UPDATE");
+    todo[1]->finished();
     
     cout << "empty: " << (todo[10] == nullptr) << endl;
     cout << "after: " << endl;

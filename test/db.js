@@ -21,7 +21,7 @@ describe('DB', function () {
     const tasks = ['task 1', 'task 2', 'task 3']
     tasks.forEach(task => db.add(task))
 
-    let taskByName = db.list().map(todo => todo.task)
+    let taskByName = db.list().map(todo => todo.name)
 
     assert.equal(db.list().length, 3, 'We expect three items')
     assert.deepEqual(taskByName,tasks, `We should get this tasks ${tasks}`)
@@ -38,7 +38,7 @@ describe('DB', function () {
     task1.update(TASK_UPDATE)
     task1.mark()
 
-    assert.equal(db.list()[0].task,TASK_UPDATE, 'position 0: should be modified' )
+    assert.equal(db.list()[0].name,TASK_UPDATE, 'position 0: should be modified' )
     assert.equal(db.list()[0].completed, true, 'position 0: should be modified' )
 
   })

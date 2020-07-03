@@ -64,7 +64,6 @@ public:
         auto location = line.find(HEADER);
         
         if(location == std::string::npos){
-         //   throw "DB Corrupted";
             cout << "DB Corrupted" << endl;
             exit(1);
         }
@@ -96,7 +95,6 @@ public:
             .completed = false
         });
         
-      
         task->id = head++;
         tasks.push_back(task);
     }
@@ -123,15 +121,15 @@ public:
              << task->completed << ":"
              << task->data << endl;
              
-           
          }
          
          outfile.close();
     }
     
     ~DB(){
-        cout << "destroy" << endl;
         commit();
+
+        // Clean
         for(auto task: tasks)
             delete task;
     }

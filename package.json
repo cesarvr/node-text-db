@@ -10,11 +10,16 @@
   "dependencies": {
     "bindings": "^1.5.0",
     "chai": "^4.2.0",
+    "clear": "^0.1.0",
+    "colors": "^1.4.0",
+    "figlet": "^1.4.0",
+    "inquirer": "^7.3.0",
     "nan": "^2.14.1"
   },
   "devDependencies": {},
   "scripts": {
     "test": "npx mocha test/",
+    "start": "node index.js",
     "install": "node-gyp rebuild"
   },
   "author": "cesar",

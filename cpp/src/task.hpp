@@ -17,11 +17,11 @@ struct Task {
     string data;
     bool completed;
     
-    void markCompleted(){
+    void finished(){
         completed = true;
     }
    
-    void unmark(){
+    void unfinished(){
         completed = false;
     }
     
