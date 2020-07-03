@@ -1,4 +1,5 @@
 build/
+.todo.db
 node_modules/
 Debug/
 Release/
