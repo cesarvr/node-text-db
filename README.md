@@ -32,24 +32,24 @@ npm start
 This two modules: 
   - [Todo](https://github.com/cesarvr/node-text-db/blob/master/cpp/src/todo.hpp) Is the main backend and takes care of handling the DB stuff like parsing, storing, etc. 
   - [Task](https://github.com/cesarvr/node-text-db/blob/master/cpp/src/task.hpp) Represent one task in memory.
-  - [v8_object_adapter](https://github.com/cesarvr/node-text-db/blob/master/cpp/src/v8_object_adapter.hpp) This module basically adapts the C++ [Task](https://github.com/cesarvr/node-text-db/blob/master/cpp/src/task.hpp) object into a v8::Javascript object, the idea is to represent the same interfaces in both worlds:  
+  - [v8_object_adapter](https://github.com/cesarvr/node-text-db/blob/master/cpp/src/v8_object_adapter.hpp) This module basically adapts the C++ [Task](https://github.com/cesarvr/node-text-db/blob/master/cpp/src/task.hpp) object into a ``v8::Javascript`` object:  
 
   ```cpp
   # C++ 
-  task.update()
-  task.completed()
+  //C++              // JS land. 
+  task.finished()    // becomes --> task.mark() 
+  task.unfinished()  // becomes --> task.unmark() 
+  task.update()      // becomes --> task.update() 
   ...
   ```
 
-  ```js
-  # Javascript 
-  task.update()
-  task.mark()
-  ...
-  ```
+> The idea is that they both represent the same entity.
 
 
-  
+
+
+
+
 
 
 
