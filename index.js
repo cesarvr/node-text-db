@@ -1,17 +1,14 @@
 const inquirer = require('inquirer')
 const clear = require('clear')
 const Todo = require('bindings')('db')
-var colors = require('colors')
+const colors = require('colors')
 
 
+let createTaskMenu = require('./lib/new')
+let editTaskMenu = require('./lib/edit')
+let markTaskAsCompletedMenu  = require('./lib/mark')
 
-
-clear()
-
-
-const bye = () => { clear(); console.log('Good Bye!') }
-
-const todo_list = () => Todo.list().sort(t => t.completed).map(task => {
+const taskMenuEntries = () => Todo.list().sort(t => t.completed).map(task => {
   let name  = task.name 
   let value = task 
   name = (task.completed)?`${name}`.strikethrough:name 
@@ -20,79 +17,33 @@ const todo_list = () => Todo.list().sort(t => t.completed).map(task => {
   return {name, value, disabled}
 })
 
-const mark = () => {
-
-  let tasks = todo_list().map(todo => {
-    todo.checked = todo.value.completed
-    return todo
-  })
-
-  inquirer
-  .prompt([
-    {
-      type: 'checkbox',
-      name: 'mark',
-      message: 'Mark for completion',
-      choices: tasks
-    }
-  ]).then(answers => {
-    let list = Todo.list()
-    let marks = answers['mark']
-
-    let notCompletedTasks = list.forEach(markedTask => {
-      let task = marks.find(task => task.id === markedTask.id)
-     
-      if(task !== undefined)
-        task.mark()
-    })
-
-    clear()
-    main()
-  })
-}
-
-
-const menu = () => {
-  let list = todo_list()
+const mainMenuView = function() {
+  clear()
   
-  list.push(new inquirer.Separator())
-  list.push({value:'task', name:'New task'})
-  list.push({value:'mark', name:'Complete Task'})
-  list.push({value:'exit', name:'Exit'})
+  const ACTIONS  = {
+    'task':  createTaskMenu,
+    'mark':  markTaskAsCompletedMenu, 
+    'exit':  () => { clear(); console.log('Good Bye!') },
+  }
 
-  return list
-} 
+  const mainMenu = () => {
+    let list = taskMenuEntries()
+    
+    list.push(new inquirer.Separator())
+    list.push({value:'task', name:'New task'})
+    list.push({value:'mark', name:'Complete Task'})
+    list.push({value:'exit', name:'Exit'})
 
-const task_edit = (task) => inquirer
-.prompt([
-    {
-      type: 'input',
-      name: 'update',
-      message: `Update`,
-      default: () => `${task.name}`,
-      validate: function (value) { 
-        return value !== ''
-      }
-    } 
-  ]).then(answers => {
-    console.log('answers ->', answers['update'])
+    return list
+  }
 
-    task.update(answers['update'])
-    clear()
-    main()
- 
-  })
-
-
-
-const main = () => inquirer
-  .prompt([
+  inquirer.prompt([
     {
       type: 'list',
       name: 'todo',
       message: 'Your Tasks For Today',
-      pageSize: 10,
-      choices: menu()
+      pageSize: 15,
+      choices: mainMenu()
     }
   ]).then(function(answers) {
     let choice = answers['todo'] 
@@ -100,45 +51,18 @@ const main = () => inquirer
     if(ACTIONS[ choice ] !== undefined){
       ACTIONS[ choice ]()
     } else {
-      task_edit(choice)
+      editTaskMenu(choice)
     }
   })
-
-const new_task = () => inquirer
-
-  .prompt([
-    {
-      type: 'input',
-      name: 'task',
-      message: 'What do you want to do ?',
-        
-      choices: menu()
-    } 
-  ]).then(answers => {
-    let taskName = answers['task']
-    
-    if(taskName !== '') {
-      Todo.add(taskName)
-      clear()
-    }
-
-    main()
-  })
-
-
-const ACTIONS  = {
-  'task':  new_task,
-  'mark':  mark, 
-  'exit':  bye,
 }
+
+markTaskAsCompletedMenu = markTaskAsCompletedMenu.bind(undefined, Todo, taskMenuEntries, mainMenuView)
+createTaskMenu = createTaskMenu.bind(undefined, Todo, mainMenuView)
+editTaskMenu = editTaskMenu.bind(undefined, mainMenuView)
 
 
 if(Todo.list().length > 0 ) {
-
-main()
+  mainMenuView()
 }else {
-  new_task()
+  editTaskMenu()
 }
-
-
-

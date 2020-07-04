@@ -1,7 +1,7 @@
 {
   "targets": [{
     "target_name": "db",
-      "sources": [ "cpp/src/*.cpp", "cpp/src/*.hpp" ],
+    "sources": [ "cpp/src/*.cpp", "cpp/src/*.hpp" ],
 
       "make_global_settings": [
         ["CC", 'usr/bin/clang'],

@@ -13,6 +13,7 @@
 #include "v8_util.hpp"
 using namespace std;
 
+
 template <typename V8Obj, typename v8Context>
 struct v8ObjectAdapter {
   V8Obj task;
@@ -46,6 +47,12 @@ struct v8ObjectAdapter {
   void add(const char* name, v8_Fn fn){
     task->Set(context, v8String(name), fn);
   }
+
+  /*template <typename T>
+  auto store(T* object){
+    task->SetInternalField(0, External::New(object))
+    return task;
+  } */
 
 };
 

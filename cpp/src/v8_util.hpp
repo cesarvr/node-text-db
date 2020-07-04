@@ -14,6 +14,8 @@
 
 
 
+using Args = const Nan::FunctionCallbackInfo<v8::Value>;
+
 template <typename T>
 auto v8String(T& value){
   return Nan::New(value).ToLocalChecked();
@@ -25,7 +27,6 @@ auto getString(I isolate, v8Str str) {
     std::string content = std::string(*utf8_str);
     return content;
 }
-
 
 template <typename v8Value, typename Context>
 auto getV8Function(v8Value& value, Context& context) {

@@ -5,7 +5,6 @@
 
 DB todo;
 std::map<int, Task*> taskHashMap;
-using Args = const Nan::FunctionCallbackInfo<v8::Value>;
 
 
 void Update(Args& args) {
@@ -31,18 +30,18 @@ void Completed(Args& args) {
   task->finished();
 }
 
-void Unfinished(const Args& args) {
+void Unfinished(Args& args) {
   auto identity = args.This()->GetIdentityHash();
 
   auto task = taskHashMap[identity];
   task->unfinished();
 }
 
-void Save(const Args& args) {
+void Save(Args& args) {
   todo.commit();
 }
 
-void Add(const Args& args) {
+void Add(Args& args) {
   if (args.Length() < 1) {
     Nan::ThrowTypeError("Wrong number of arguments");
     return;
@@ -54,7 +53,7 @@ void Add(const Args& args) {
   }
 }
 
-void List(const Args& args) {
+void List(Args& args) {
   auto context = args.GetIsolate()->GetCurrentContext();
   auto isolate = args.GetIsolate();
   auto list = v8::Array::New(isolate);
