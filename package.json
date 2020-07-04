@@ -20,7 +20,7 @@
   "scripts": {
     "test": "npx mocha test/",
     "start": "node index.js",
-    "compile": "clear && node-gyp clean && node-gyp configure && node-gyp build && mocha test"
+    "compile": "clear && node-gyp clean && node-gyp configure && node-gyp build && npx mocha test"
   },
   "author": "cesar",
   "license": "MIT",
