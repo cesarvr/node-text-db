@@ -5,7 +5,7 @@ To install dependencies:
 npm install
 ```
 
-To build the modules and run the test: 
+You can build the native module on MacOSX (Xcode) or Linux ( ``g++, make, build-tools`` ) and run the tests with the following command: 
 
 ```sh
 npm run compile
